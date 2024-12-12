@@ -42,7 +42,7 @@ label {
     color: #555555;
 }
 
-input[type="password"],
+input[type="option"],
 input[type="text"],
 input[type="tel"],
 input[type="file"],

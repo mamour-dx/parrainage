@@ -31,7 +31,7 @@ USE `parainage`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
-  `mot_de_passe` varchar(255) NOT NULL,
+  `option` enum('Inf-Inf','Inf-Tr') NOT NULL,
   `numero_telephone` varchar(9) NOT NULL,
   `annee` enum('1ère année (Filleul)','2ème année (Parrain)') NOT NULL,
   `photo` blob NOT NULL

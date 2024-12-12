@@ -16,7 +16,7 @@ try {
     //Récupération des données du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
-        $motDePasse = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hachage du mot de passe
+        $option = $_POST['option']; 
         $numeroTelephone = $_POST['phone'];
         $annee = $_POST['year'];
 
@@ -29,13 +29,13 @@ try {
 
         //Exécution de la requête SQL
         $query = $mysqlClient->prepare(
-            'INSERT INTO users (nom, mot_de_passe, numero_telephone, annee, photo) 
-             VALUES (:name, :password, :phone, :year, :photo)'
+            'INSERT INTO users (nom, option, numero_telephone, annee, photo) 
+             VALUES (:name, :options, :phone, :year, :photo)'
         );
 
         $query->execute([
             ':name' => $name,
-            ':password' => $motDePasse,
+            ':options' => $option,
             ':phone' => $numeroTelephone,
             ':year' => $annee,
             ':photo' => $photo,

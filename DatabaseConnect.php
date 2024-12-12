@@ -16,7 +16,7 @@ try {
     //Récupération des données du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
-        $option = $_POST['option']; 
+        $option = $_POST['options']; 
         $numeroTelephone = $_POST['phone'];
         $annee = $_POST['year'];
 
@@ -29,7 +29,7 @@ try {
 
         //Exécution de la requête SQL
         $query = $mysqlClient->prepare(
-            'INSERT INTO users (nom, option, numero_telephone, annee, photo) 
+            'INSERT INTO users (nom, options, numero_telephone, annee, photo) 
              VALUES (:name, :options, :phone, :year, :photo)'
         );
 

@@ -14,7 +14,7 @@ background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    animation: animationfond 3s linear infinte;
+    animation: animationfond 3s linear infinite;
 }
 
 .container {

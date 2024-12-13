@@ -9,45 +9,72 @@
 
 </head>
 <body>
-    <div class="container">
-        <h1>Parrainage ESP</h1>
+    <div class="box">
+        <span class="boxLine"></span>
         <form action="DatabaseConnect.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="name">Nom Complet:</label>
+        <h2>Parrainage ESP</h2>
+            <div class="inputBox">
                 <input type="text" id="name" name="name" required>
+                <span>Nom Complet:</span>
+                <i></i>
             </div>
 
-            <div class="form-group">
-                <label for="options">Option:</label>
-                <select id="option" name="options" required>
-                <option value="" disabled selected>Select your option</option>
-                <option value="1">Inf-Inf</option>
-                <option value="2">Inf-Tr</option></select>
+            <div class="rBtn">
+                <label class="lbl">Option: </label>
+                <div class="radio-wrapper">
+                    <input type="radio" name="options" id="option1" value="1" required class="unchecked"/>
+                    <label for="option1">INF-INF</label>
+                </div>
+                <div class="radio-wrapper">
+                    <input type="radio" name="options" id="option2" value="2" class="unchecked" />
+                    <label for="option2">INF-TR</label>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="phone">Numéro Téléphone:</label>
+
+            <div class="inputBox">
                 <input type="tel" id="phone" name="phone" required>
+                <span>Numéro de téléphone</span>
+                <i></i>
             </div>
-            <div class="form-group">
-                <label for="year">Année:</label>
-                <select id="year" name="year" required>
-                    <option value="" disabled selected>Select your year</option>
-                    <option value="1">1ère année (Filleul)</option>
-                    <option value="2">2ème année (Parrain)</option>
-                </select>
+
+        <div class="rBtn">
+            <label class="lbl">Année:</label>
+            <div class="radio-wrapper">
+                <input type="radio" class="unchecked" id="parrain" name="year" value="2" required />
+                <label for="parrain">Parrain</label>
             </div>
-            <div class="form-group">
-                <label for="photo">Upload Photo:</label>
+            <div class="radio-wrapper">
+                <input type="radio" class="unchecked" id="filleul" name="year" value="1" required />
+                <label for="filleul">Filleul</label>
+            </div>
+        </div>
+
+            <div class="photo">
+                <label for="photo">Photo:</label>
                 <input type="file" id="photo" name="photo" accept="image/*" required>
             </div>
+            
             <button type="submit">Submit</button>
         </form>
+
     </div>
+
     <footer class="copy">
         <p>&copy; - Système parrainage ESP 2024/2025 💙</p>
         <p>Code source: <a href="https://github.com/mamour-dx/parrainage" target="_blank">Github</a></p>
-    </footer>
-
+    <footer/>
 </body>
+<script>
+    window.onload = function() {
+
+        const radios = document.querySelectorAll('.unchecked');
+
+        // Loop through all selected radio buttons and deselect them
+        radios.forEach(function(radio) {
+            radio.checked = false;
+        });
+    };
+</script>
+
 </html>

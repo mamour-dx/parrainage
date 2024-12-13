@@ -19,6 +19,7 @@ body
     background-position:  15px 0, 15px 0, 0 0, 0 0;
     background-size: 15px 15px;
     background-repeat: repeat;
+    animation: animationfond 2s linear infinite;
 }
 .box
 {
@@ -292,4 +293,12 @@ footer {
     text-align: center;
     color: #8f8f8f;
     margin-bottom: 10px;
+}
+@keyframes animationfond {
+    0% {
+        background-position: 0 0, 40px 70px, 0 0;
+    }
+    100% {
+        background-position: 80px 140px, 120px 210px, 80px 140px;
+    }
 }

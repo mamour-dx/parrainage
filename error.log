@@ -1,0 +1,1 @@
+SQLSTATE[08S01]: Communication link failure: 1153 Got a packet bigger than 'max_allowed_packet' bytesSQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'photo' at row 1SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'photo' at row 1

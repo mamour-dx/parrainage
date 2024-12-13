@@ -3,8 +3,7 @@ const MYSQL_HOST = 'localhost';
 const MYSQL_PORT = 3306;
 const MYSQL_NAME = 'parainage';
 const MYSQL_USER = 'root';
-const MYSQL_PASSWORD = '';
-
+const MYSQL_PASSWORD = 'passer';
 
 try {
     $mysqlClient = new PDO(
@@ -13,40 +12,55 @@ try {
         MYSQL_PASSWORD
     );
     $mysqlClient->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //Récupération des données du formulaire
+
+    // Récupération des données du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
         $option = $_POST['options']; 
         $numeroTelephone = $_POST['phone'];
         $annee = $_POST['year'];
 
-        // Gestion de la photo (conversion en données binaires)
+        // Gestion de la photo
+        $uploadDir = 'images/'; 
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $photo = file_get_contents($_FILES['photo']['tmp_name']);
+            $fileExtension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
+                throw new Exception('Extension de fichier non autorisée. Seules les extensions JPG, PNG et GIF sont acceptées.');
+            }
+
+            $newFileName = $numeroTelephone . '.jpg';
+
+            
+            $destination = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($_FILES['photo']['tmp_name'], $destination)) {
+                $query = $mysqlClient->prepare(
+                    'INSERT INTO users (nom, options, numero_telephone, annee, photo) 
+                     VALUES (:name, :options, :phone, :year, :photo)'
+                );
+
+                $query->execute([
+                    ':name' => $name,
+                    ':options' => $option,
+                    ':phone' => $numeroTelephone,
+                    ':year' => $annee,
+                    ':photo' => $newFileName, // Enregistrer uniquement le nom de la photo dans la base
+                ]);
+            } else {
+                throw new Exception('Erreur lors de l\'enregistrement de la photo.');
+            }
         } else {
             throw new Exception('Erreur lors du téléchargement de la photo.');
         }
-
-        //Exécution de la requête SQL
-        $query = $mysqlClient->prepare(
-            'INSERT INTO users (nom, options, numero_telephone, annee, photo) 
-             VALUES (:name, :options, :phone, :year, :photo)'
-        );
-
-        $query->execute([
-            ':name' => $name,
-            ':options' => $option,
-            ':phone' => $numeroTelephone,
-            ':year' => $annee,
-            ':photo' => $photo,
-        ]);}
-
-        
+    }
 } catch (Exception $exception) {
     die('Erreur : ' . $exception->getMessage());
 }
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

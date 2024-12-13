@@ -19,7 +19,7 @@ body
     background-position:  15px 0, 15px 0, 0 0, 0 0;
     background-size: 15px 15px;
     background-repeat: repeat;
-    animation: animationfond 2s linear infinite;
+    animation: animationfond 3.5s linear infinite;
 }
 .box
 {

@@ -293,7 +293,6 @@ footer {
     text-align: center;
     color: #8f8f8f;
     margin-bottom: 10px;
-    animation: footeranim 1s ease-out;
 }
 
 @keyframes animationfond {

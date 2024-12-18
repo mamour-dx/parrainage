@@ -1,26 +1,27 @@
 <?php
-const MYSQL_HOST = 'localhost';
-const MYSQL_PORT = 3306;
-const MYSQL_NAME = 'parainage';
-const MYSQL_USER = 'root';
-const MYSQL_PASSWORD = 'passer';
+require_once(__DIR__ . '/config/Mysql.php');
 
-try {
-    $mysqlClient = new PDO(
-        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', MYSQL_HOST, MYSQL_NAME, MYSQL_PORT),
-        MYSQL_USER,
-        MYSQL_PASSWORD
-    );
-    $mysqlClient->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+
+try{
     // Récupération des données du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'];
         $option = $_POST['options']; 
         $numeroTelephone = $_POST['phone'];
         $annee = $_POST['year'];
-
-        // Gestion de la photo
+        //Gestion du numéro de téléphone
+        if (!preg_match('/^(77|70|76|75|78)[0-9]{7}$/', $numeroTelephone)) {
+            throw new Exception("Le numéro de téléphone n'est pas valide.");
+        }
+        $requete=$mysqlClient->prepare('SELECT COUNT(*) FROM users WHERE numero_telephone =?');
+        $requete->execute(array ($numeroTelephone));
+        $nombreUtilisateurs = $requete->fetchColumn();
+        if ($nombreUtilisateurs>0){
+            die("Ce numéro est déja enregistré");
+        }
+        else{
+            // Gestion de la photo
         $uploadDir = 'images/'; 
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $fileExtension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
@@ -54,9 +55,13 @@ try {
         } else {
             throw new Exception('Erreur lors du téléchargement de la photo.');
         }
+        }
+        
     }
-} catch (Exception $exception) {
+}
+catch(Exception $exception){
     die('Erreur : ' . $exception->getMessage());
+
 }
 ?>
 
@@ -74,7 +79,7 @@ try {
     <h1>Merci!</h1>
     <img src="images/ucad.jpeg" alt="Photo">
     <p>Vos informations ont été correctement enregistrées!</p>
-    <a href="index.html" class="btn">Back to Home</a>
+    <a href="index.php" class="btn">Back to Home</a>
 </body>
 </html>
 
